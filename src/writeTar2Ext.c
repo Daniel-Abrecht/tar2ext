@@ -101,10 +101,8 @@ int helper_ext_stat(ext2_ino_t inode, const struct stat* statbuf){
     return -1;
   }
   if(statbuf){
-    if((statbuf->st_mode & S_IFMT) && (full_inode.i_mode & S_IFMT) != (statbuf->st_mode & S_IFMT)){
-      fprintf(stderr, "Inode type and type specified in mode mismatch");
-      return -1;
-    }
+    if((statbuf->st_mode & S_IFMT) && (full_inode.i_mode & S_IFMT) != (statbuf->st_mode & S_IFMT))
+      fprintf(stderr, "Warning: Inode type and type specified in mode mismatch\n");
     full_inode.i_uid = statbuf->st_uid;
     full_inode.i_gid = statbuf->st_gid;
     full_inode.i_mode = (full_inode.i_mode & S_IFMT) | (statbuf->st_mode & ~S_IFMT);
@@ -517,7 +515,7 @@ int main(int argc, char* argv[]){
 
   // Check number of arguments
   if(argc != 2){
-    printf("Usage: %s image.ext < archive.tar", argv[0]);
+    printf("Usage: %s image.ext < archive.tar\n", argv[0]);
     return 1;
   }
 
