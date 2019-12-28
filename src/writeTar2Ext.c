@@ -224,6 +224,7 @@ int helper_ext_file_type(mode_t mode){
 
 int helper_ext_create(ext2_ino_t* result){
   errcode_t err = 0;
+  char* link = 0;
   // Turn the file path into a list
   ext2_ino_t inode = EXT2_ROOT_INO;
   char* list = mkdirlist(tar->th_buf.name, false);
@@ -257,7 +258,6 @@ int helper_ext_create(ext2_ino_t* result){
     .st_ctime = th_get_mtime(tar)
   };
   ext2_ino_t parent = inode;
-  char* link = 0;
   if(type == ET_SYMLINK || type == ET_HARDLINK){
     link = strdup(th_get_linkname(tar));
     if(!link){
