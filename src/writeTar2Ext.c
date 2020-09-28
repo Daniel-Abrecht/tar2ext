@@ -227,7 +227,7 @@ int helper_ext_create(ext2_ino_t* result){
   char* link = 0;
   // Turn the file path into a list
   ext2_ino_t inode = EXT2_ROOT_INO;
-  char* list = mkdirlist(tar->th_buf.name, false);
+  char* list = mkdirlist(th_get_pathname(tar), false);
   if(!list){
     myperror("mkdirlist failed");
     return -1;

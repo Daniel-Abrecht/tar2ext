@@ -1,8 +1,6 @@
 # tar2ext
 Extract tar archive contents to ext filesystem image or device.
 
-This is still alpha software, there definitly are still some bugs.
-
 # Usage
 
 ```
@@ -18,3 +16,4 @@ you can simply use ```gzip -d < archive.tar.gz | tar2ext image.ext```, and so on
  * ACLs aren't supported yet.
  * Replacing a file with one of a different type isn't supportet yet.
  * Changing a symbolic link isn't supportet yet
+ * This is still alpha software, so there may still be some bugs left.
