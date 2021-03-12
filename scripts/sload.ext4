@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+has_source=0
+has_prefix=0
+has_dev=0
+
+while [ "$#" != 0 ]
+do
+  arg="$1"; shift
+  case "$arg" in
+    -f) source="$1"; shift; has_source=1; ;;
+    -t) prefix="$1"; shift; has_prefix=1; ;;
+     *) [ "$has_dev" = 0 ]; dev="$arg"; has_dev=1; ;;
+  esac
+done
+
+[ "$has_source" = 1 ]
+[ "$has_dev" = 1 ]
+
+# Tar doesn't have an option to just prefix paths. Escape for use in sed and pray that there's nothing missing
+eprefix="$(printf "%s\n" "$prefix" | sed 's|/$||g;s/[\/\\]/\\\0/g')"
+
+tar --create --directory="$source" --force-local --preserve-permissions --transform="s/^\/?/$eprefix\//" . | writeTar2Ext "$dev"
