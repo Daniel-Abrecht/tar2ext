@@ -1,8 +1,11 @@
-all: bin/writeTar2Ext
+LDLIBS+=-ltar -lext2fs -lcom_err
+CFLAGS+=-std=c99 -Wall -Wextra -Werror -pedantic
 
-bin/writeTar2Ext: src/writeTar2Ext.c
+all: bin/tar2ext
+
+bin/tar2ext: src/tar2ext.c
 	mkdir -p bin
-	$(CC) -std=c99 -Wall -Wextra -Werror -pedantic $^ -ltar -lext2fs -lcom_err -o $@
+	$(CC) -o "$@" $(LDFLAGS) $(CFLAGS) $^ $(LOADLIBES) $(LDLIBS)
 
 clean:
 	rm -rf bin
