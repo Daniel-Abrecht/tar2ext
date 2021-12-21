@@ -42,5 +42,7 @@ if [ "$preserve_perms" = 0 ]
   then TOPTS="$TOPTS --owner=root:0 --group=root:0"
 fi
 
+set -u
+
 # The ./././. is a hack. It's an attempt to prevent the transform regex to affect symlink targets :(
 tar $TOPTS --directory="$source" --transform="s/^\.\/\.\/\.\/\.\//$eprefix\//" ./././. | tar2ext "$dev"
